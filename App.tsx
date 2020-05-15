@@ -1,11 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import  { createStore, combineReducers } from 'redux';
+import { Provider as StoreProvider} from 'react-redux';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
+import * as Fonts from 'expo-font';
+import { AppLoading } from 'expo';
+import { FONT_BOLD, FONT_REGULAR } from './src/constants/Fonts';
+
+import { productsReducer } from './src/store/reducers/productsReducer';
+import ProductsNavigator from './src/navigation/MainNavigator';
+import Colors from './src/constants/Colors';
+
+const rootReducer = combineReducers({
+  products: productsReducer
+});
+const store = createStore(rootReducer);
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: Colors.black,
+    accent: Colors.secondaryColor,
+  },
+};
+
+const fetchFonts = () => {
+  return Fonts.loadAsync({
+    [FONT_REGULAR]: require('./assets/fonts/Montserrat-Regular.ttf'),
+    [FONT_BOLD]: require('./assets/fonts/Montserrat-Bold.ttf'),
+  });
+}
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  if (!fontsLoaded) {
+    return (
+        <AppLoading
+            startAsync={fetchFonts}
+            onFinish={() => setFontsLoaded(true)}
+        />
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+     <StoreProvider store={store}>
+       <PaperProvider theme={theme}>
+         <ProductsNavigator />
+       </PaperProvider>
+    </StoreProvider>
   );
 }
 
