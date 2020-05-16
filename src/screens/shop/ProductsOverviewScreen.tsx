@@ -1,12 +1,15 @@
 import React from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Product } from '../../models/Product';
 import { RootState } from '../../models/ProductsState';
 import Colors from '../../constants/Colors';
 import ProductItem from '../../components/ProductItem';
 import { Cart, ProductDetail } from '../../navigation/routes';
+import { addToCart } from '../../store/actions/cartActions';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../../components/CustomHeaderButton';
 
 type Props = {
     navigation: StackNavigationProp;
@@ -16,6 +19,7 @@ const ProductsOverviewScreen = (props: Props) => {
     const availableProducts = useSelector((state: RootState) => {
         return state.products.availableProducts
     });
+    const dispatch = useDispatch();
     const renderProduct = (listItem: ListRenderItemInfo<Product>) => {
         return <ProductItem
             product={listItem.item}
@@ -25,7 +29,7 @@ const ProductsOverviewScreen = (props: Props) => {
                 })
             }}
             onAddToCart={() => {
-                props.navigation.navigate(Cart)
+                dispatch(addToCart(listItem.item));
             }}
         />
     };
@@ -41,9 +45,22 @@ const ProductsOverviewScreen = (props: Props) => {
     )
 };
 
-ProductsOverviewScreen.navigationOptions = () => {
+ProductsOverviewScreen.navigationOptions = (props: Props) => {
     return {
-        title: 'All products'
+        title: 'All products',
+        headerRight: (navigationProperties: any) => {
+            return (
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                    <Item
+                        title='Cart'
+                        iconName="shopping-cart"
+                        onPress={() => {
+                            props.navigation.navigate(Cart);
+                        }}
+                    />
+                </HeaderButtons>
+            )
+        }
     }
 }
 

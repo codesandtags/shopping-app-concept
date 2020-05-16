@@ -7,13 +7,15 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import * as Fonts from 'expo-font';
 import { AppLoading } from 'expo';
 import { FONT_BOLD, FONT_REGULAR } from './src/constants/Fonts';
-
-import { productsReducer } from './src/store/reducers/productsReducer';
 import ProductsNavigator from './src/navigation/MainNavigator';
 import Colors from './src/constants/Colors';
 
+import { productsReducer } from './src/store/reducers/productsReducer';
+import { cartReducer } from './src/store/reducers/cartReducer';
+
 const rootReducer = combineReducers({
-  products: productsReducer
+  products: productsReducer,
+  cart: cartReducer
 });
 const store = createStore(rootReducer);
 
