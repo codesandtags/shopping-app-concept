@@ -12,10 +12,10 @@ export const addToCart = (product: Product): Action => {
     }
 }
 
-export const removeFromCart = (product: Product): Action => {
+export const removeFromCart = (item: any): Action => {
 
     return {
         type: REMOVE_FROM_CART,
-        payload: product
+        payload: item
     }
 }

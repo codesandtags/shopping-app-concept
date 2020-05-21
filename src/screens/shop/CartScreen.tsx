@@ -1,12 +1,15 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
+
 import Colors from '../../constants/Colors';
 import { Button } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../models/ProductsState';
 import { FONT_BOLD } from '../../constants/Fonts';
 import CartItem from '../../components/CartItem';
+import { removeFromCart } from '../../store/actions/cartActions';
+import { addOrder } from '../../store/actions/ordersActions';
 
 type Props = {
   navigation: StackNavigationProp;
@@ -34,9 +37,18 @@ const CartScreen = (props: Props) => {
 
         return itemsToArray;
     });
+    const dispatch = useDispatch();
+    const onOrderNow = () => {
+      console.log('Adding order...');
+      dispatch(addOrder(cartItems, cartTotalAmount))
+    };
+    const onRemoveItem = (item: any) => {
+      console.log('Removing item', item);
+        dispatch(removeFromCart(item));
+    };
     const renderCartItem = (item: any) => {
         return (
-            <CartItem cartItem={item} key={item.productId}/>
+            <CartItem cartItem={item} key={item.productId} removeItem={onRemoveItem}/>
         )
     };
 
@@ -55,21 +67,26 @@ const CartScreen = (props: Props) => {
                     icon="truck"
                     mode="contained"
                     uppercase={false}
-                    onPress={() => {
-                    }}>
+                    onPress={onOrderNow}>
                     Order Now!
                 </Button>
             </View>
             <View>
-                <Text>Cart Items</Text>
                 <FlatList
                     data={cartItems}
+                    keyExtractor={(item) => item.productId}
                     renderItem={(itemList) => renderCartItem(itemList.item)}
                 />
             </View>
         </View>
     )
 };
+
+CartScreen.navigationOptions = (props: Props) => {
+    return {
+        title: 'Your Cart'
+    }
+}
 
 const styles = StyleSheet.create({
     screen: {

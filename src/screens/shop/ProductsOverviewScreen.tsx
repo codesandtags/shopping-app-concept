@@ -12,7 +12,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../../components/CustomHeaderButton';
 
 type Props = {
-    navigation: StackNavigationProp;
+    navigation: any;
 };
 
 const ProductsOverviewScreen = (props: Props) => {
@@ -48,6 +48,19 @@ const ProductsOverviewScreen = (props: Props) => {
 ProductsOverviewScreen.navigationOptions = (props: Props) => {
     return {
         title: 'All products',
+        headerLeft: (navigationProperties: any) => {
+            return (
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                    <Item
+                        title='Menu'
+                        iconName="menu"
+                        onPress={() => {
+                            props.navigation.toggleDrawer();
+                        }}
+                    />
+                </HeaderButtons>
+            )
+        },
         headerRight: (navigationProperties: any) => {
             return (
                 <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>

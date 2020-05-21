@@ -1,4 +1,5 @@
 import { CartState } from './CartState';
+import { OrdersState } from './OrdersState';
 
 export interface ProductsState {
     availableProducts: any[];
@@ -7,5 +8,6 @@ export interface ProductsState {
 
 export interface RootState {
     products: ProductsState,
-    cart: CartState
+    cart: CartState,
+    orders: OrdersState
 }

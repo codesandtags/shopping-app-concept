@@ -1,11 +1,13 @@
-import { Product } from '../models/Product';
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import Colors from '../constants/Colors';
-import { FONT_BOLD, FONT_REGULAR } from '../constants/Fonts';
+import { FONT_BOLD } from '../constants/Fonts';
 
 type Props = {
-    cartItem: any
+    cartItem: any,
+    removeItem: any
 };
 
 const CartItem = (props: Props) => {
@@ -14,16 +16,12 @@ const CartItem = (props: Props) => {
 
     return (
         <View style={styles.cartItemContainer}>
-            <Text>
-                <Text>{cartItem.quantity} </Text>
-                <Text style={styles.cartTitle}>{cartItem.productTitle}</Text>
-            </Text>
-            <View>
-                <Text style={styles.cartSum}>${cartItem.productPrice}</Text>
-            </View>
-            <View>
-                <Text style={styles.cartSum}>${cartItem.productPrice}</Text>
-            </View>
+            <Text style={styles.quantity}>{cartItem.quantity} </Text>
+            <Text style={styles.cartTitle}>{cartItem.productTitle}</Text>
+            <Text style={styles.cartSum}>${cartItem.sum.toFixed(2)}</Text>
+            <TouchableOpacity onPress={() => props.removeItem(cartItem)}>
+                <MaterialCommunityIcons name="cart-remove" size={24} color={Colors.primaryColor}/>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -34,31 +32,36 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: Colors.gray,
         elevation: 3,
-        shadowOffset: {width: 0, height: 10},
-        shadowRadius: 10,
+        shadowOffset: {width: 0, height: 2},
+        shadowRadius: 5,
         shadowColor: Colors.black,
         shadowOpacity: 0.3,
-        marginVertical: 20,
+        marginVertical: 10,
         width: '100%',
-        paddingBottom: 0
+        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: 60
+    },
+    quantity: {
+        fontSize: 16,
+        paddingRight: 10,
     },
     cartTitle: {
-        marginTop: 12,
         fontSize: 16,
-        textAlign: 'center',
+        textAlign: 'left',
         color: Colors.secondaryColor,
-        fontFamily: FONT_BOLD
+        fontFamily: FONT_BOLD,
+        flex: 1,
     },
     cartSum: {
         fontSize: 14,
         textAlign: 'center',
-        marginTop: 5,
-        marginBottom: 12,
-        fontFamily: FONT_REGULAR
+        fontFamily: FONT_BOLD,
+        width: 80
     },
-    deleteButton: {
-
-    }
+    deleteButton: {}
 });
 
 export default CartItem;
