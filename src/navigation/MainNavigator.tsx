@@ -29,7 +29,6 @@ const ProductsNavigator = createStackNavigator({
     [Routes.Cart]: CartScreen,
     [Routes.ProductsOverview]: ProductsOverviewScreen,
     [Routes.ProductDetail]: ProductDetailScreen,
-    [Routes.EditProduct]: EditProductScreen,
 }, {
     defaultNavigationOptions: defaultNavigationConfig,
     initialRouteName: Routes.ProductsOverview,
@@ -57,6 +56,7 @@ const OrdersNavigator = createStackNavigator({
 
 const UserProductsNavigator = createStackNavigator({
     [Routes.UserProducts]: UserProductsScreen,
+    [Routes.EditProduct]: EditProductScreen,
 }, {
     defaultNavigationOptions: defaultNavigationConfig,
     navigationOptions: {

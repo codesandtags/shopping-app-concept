@@ -1,12 +1,12 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { RootState } from '../../models/ProductsState';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../../components/CustomHeaderButton';
 import ProductItem from '../../components/ProductItem';
-import { ProductDetail } from '../../navigation/routes';
-import { addToCart } from '../../store/actions/cartActions';
+import { EditProduct } from '../../navigation/routes';
 import { Product } from '../../models/Product';
 import { Button } from 'react-native-paper';
 import ButtonStyles from '../../styles/Buttons';
@@ -22,6 +22,17 @@ const UserProductsScreen = (props: Props) => {
         return state.products.userProducts;
     });
     const dispatch = useDispatch();
+    const handleDeleteProduct = (product: Product) => {
+      Alert.alert('Are you sure?', 'Do you want to delete this product?',[
+          {
+              text: 'No'
+          },
+          {
+              text: 'Yes',
+              onPress: () => dispatch(deleteProduct(product))
+          },
+      ])
+    };
     const renderUserProduct = (product: Product) => {
         return <ProductItem
             product={product}
@@ -32,7 +43,9 @@ const UserProductsScreen = (props: Props) => {
                 mode="contained"
                 uppercase={false}
                 onPress={() => {
-
+                    props.navigation.navigate(EditProduct, {
+                        product
+                    });
                 }}>
                 Edit
             </Button>
@@ -42,9 +55,7 @@ const UserProductsScreen = (props: Props) => {
                 icon="playlist-remove"
                 mode="contained"
                 uppercase={false}
-                onPress={() => {
-                    dispatch(deleteProduct(product));
-                }}>
+                onPress={() => handleDeleteProduct(product)}>
                 Remove
             </Button>
         </ProductItem>
@@ -76,6 +87,19 @@ UserProductsScreen.navigationOptions = (props: Props) => {
                 </HeaderButtons>
             )
         },
+        headerRight: (navigationProperties: any) => {
+            return (
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                    <Item
+                        title='Add Product'
+                        iconName="add"
+                        onPress={() => {
+                            props.navigation.navigate(EditProduct);
+                        }}
+                    />
+                </HeaderButtons>
+            )
+        }
     }
 }
 
