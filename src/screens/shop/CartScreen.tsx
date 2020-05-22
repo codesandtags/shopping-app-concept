@@ -48,7 +48,13 @@ const CartScreen = (props: Props) => {
     };
     const renderCartItem = (item: any) => {
         return (
-            <CartItem cartItem={item} key={item.productId} removeItem={onRemoveItem}/>
+            <CartItem
+                showBorderBox={true}
+                cartItem={item}
+                key={item.productId}
+                removeItem={onRemoveItem}
+                deletableItem={true}
+            />
         )
     };
 
@@ -57,7 +63,7 @@ const CartScreen = (props: Props) => {
             <View style={styles.cartSummaryContainer}>
                 <Text style={styles.cartSummaryText}>
                     <Text>Total:   </Text>
-                    <Text style={styles.cartAmount}>${cartTotalAmount.toFixed(2)}</Text>
+                    <Text style={styles.cartAmount}>${Math.abs(cartTotalAmount).toFixed(2)}</Text>
                 </Text>
 
                 <Button

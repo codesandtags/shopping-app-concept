@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../models/ProductsState';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../../components/CustomHeaderButton';
+import OrderItem from '../../components/OrderItem';
 
 type Props = {
   navigation: any;
@@ -14,24 +15,13 @@ type Props = {
 const OrdersScreen = (props: Props) => {
     const orders = useSelector((state: RootState) => state.orders.orders);
     const renderOrder = (order:any) => {
-        console.log('REndering order', order);
-
       return (
-          <View style={{
-              borderWidth: 1,
-              width: '90%',
-              flex: 1,
-              padding: 5,
-              alignSelf: 'center'
-          }}>
-              <Text>{order.totalAmount}</Text>
-          </View>
+          <OrderItem orderItem={order}/>
       )
     };
 
     return (
         <View style={styles.screen}>
-            <Text>Welcome to this OrdersScreen</Text>
             <FlatList
                 data={orders}
                 renderItem={itemList => renderOrder(itemList.item)}
@@ -61,7 +51,10 @@ OrdersScreen.navigationOptions = (props: Props) => {
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1
+        paddingVertical: 10,
+        flex: 1,
+        width: '90%',
+        alignSelf: 'center'
     }
 });
 

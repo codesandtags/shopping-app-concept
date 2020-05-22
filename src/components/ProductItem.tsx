@@ -7,8 +7,7 @@ import { FONT_BOLD, FONT_REGULAR } from '../constants/Fonts';
 
 type Props = {
     product: Product,
-    onViewDetail: any,
-    onAddToCart: any
+    children: any
 };
 
 const ProductItem = (props: Props) => {
@@ -20,23 +19,7 @@ const ProductItem = (props: Props) => {
             <Text style={styles.productTitle}>{product.title}</Text>
             <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
             <View style={styles.productActions}>
-                <Button
-                    style={styles.productButton}
-                    icon="camera"
-                    mode="contained"
-                    uppercase={false}
-                    onPress={props.onViewDetail}>
-                    See details
-                </Button>
-                <Button
-                    style={styles.productButton}
-                    color={Colors.primaryColor}
-                    icon="cart"
-                    mode="contained"
-                    uppercase={false}
-                    onPress={props.onAddToCart}>
-                    Add to cart
-                </Button>
+                {props.children}
             </View>
         </View>
     )

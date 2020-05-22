@@ -10,6 +10,8 @@ import { Cart, ProductDetail } from '../../navigation/routes';
 import { addToCart } from '../../store/actions/cartActions';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../../components/CustomHeaderButton';
+import { Button } from 'react-native-paper';
+import ButtonStyles from '../../styles/Buttons';
 
 type Props = {
     navigation: any;
@@ -23,15 +25,31 @@ const ProductsOverviewScreen = (props: Props) => {
     const renderProduct = (listItem: ListRenderItemInfo<Product>) => {
         return <ProductItem
             product={listItem.item}
-            onViewDetail={() => {
-                props.navigation.navigate(ProductDetail, {
-                    product: listItem.item
-                })
-            }}
-            onAddToCart={() => {
-                dispatch(addToCart(listItem.item));
-            }}
-        />
+        >
+            <Button
+                style={ButtonStyles.productButton}
+                icon="camera"
+                mode="contained"
+                uppercase={false}
+                onPress={() => {
+                    props.navigation.navigate(ProductDetail, {
+                        product: listItem.item
+                    })
+                }}>
+                See details
+            </Button>
+            <Button
+                style={ButtonStyles.productButton}
+                color={Colors.primaryColor}
+                icon="cart"
+                mode="contained"
+                uppercase={false}
+                onPress={() => {
+                    dispatch(addToCart(listItem.item));
+                }}>
+                Add to cart
+            </Button>
+        </ProductItem>
     };
 
     return (
@@ -79,17 +97,15 @@ ProductsOverviewScreen.navigationOptions = (props: Props) => {
 
 const styles = StyleSheet.create({
     screen: {
-        width: '100%',
+        paddingVertical: 10,
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: Colors.white
+        width: '90%',
+        alignSelf: 'center'
     },
     productsList: {
         borderWidth: 0,
         width: '100%',
         alignSelf: 'center',
-        paddingHorizontal: '10%',
     },
 });
 

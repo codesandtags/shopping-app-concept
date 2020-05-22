@@ -30,7 +30,6 @@ const ProductsNavigator = createStackNavigator({
     [Routes.ProductsOverview]: ProductsOverviewScreen,
     [Routes.ProductDetail]: ProductDetailScreen,
     [Routes.EditProduct]: EditProductScreen,
-    [Routes.UserProducts]: UserProductsScreen,
 }, {
     defaultNavigationOptions: defaultNavigationConfig,
     initialRouteName: Routes.ProductsOverview,
@@ -50,7 +49,21 @@ const OrdersNavigator = createStackNavigator({
     navigationOptions: {
         drawerIcon: (drawerConfig: any) => {
             return (
-                <MaterialIcons name="create" size={24} color="black" />
+                <MaterialIcons name="list" size={24} color="black" />
+            )
+        }
+    }
+});
+
+const UserProductsNavigator = createStackNavigator({
+    [Routes.UserProducts]: UserProductsScreen,
+}, {
+    defaultNavigationOptions: defaultNavigationConfig,
+    navigationOptions: {
+        drawerLabel: 'Admin Products',
+        drawerIcon: (drawerConfig: any) => {
+            return (
+                <MaterialIcons name="edit" size={24} color="black" />
             )
         }
     }
@@ -58,7 +71,8 @@ const OrdersNavigator = createStackNavigator({
 
 const ShopNavigator = createDrawerNavigator({
     Products: ProductsNavigator,
-    Orders: OrdersNavigator
+    Orders: OrdersNavigator,
+    UserProducts: UserProductsNavigator
 }, {
     contentOptions: {
         activeTintColor: Colors.primaryColor,

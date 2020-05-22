@@ -7,27 +7,33 @@ import { FONT_BOLD } from '../constants/Fonts';
 
 type Props = {
     cartItem: any,
-    removeItem: any
+    removeItem: any,
+    deletableItem: boolean;
+    showBorderBox: boolean;
 };
 
 const CartItem = (props: Props) => {
     const cartItem = props.cartItem;
-    console.log('Cart Item', props.cartItem);
+    const styleCartItem = props.showBorderBox ? styles.cartItemContainerWithBorder : styles.cartItemContainer;
 
     return (
-        <View style={styles.cartItemContainer}>
+        <View style={styleCartItem}>
             <Text style={styles.quantity}>{cartItem.quantity} </Text>
             <Text style={styles.cartTitle}>{cartItem.productTitle}</Text>
             <Text style={styles.cartSum}>${cartItem.sum.toFixed(2)}</Text>
-            <TouchableOpacity onPress={() => props.removeItem(cartItem)}>
-                <MaterialCommunityIcons name="cart-remove" size={24} color={Colors.primaryColor}/>
-            </TouchableOpacity>
+            {
+                props.deletableItem && (
+                    <TouchableOpacity onPress={() => props.removeItem(cartItem)}>
+                        <MaterialCommunityIcons name="cart-remove" size={24} color={Colors.primaryColor}/>
+                    </TouchableOpacity>
+                )
+            }
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    cartItemContainer: {
+    cartItemContainerWithBorder: {
         backgroundColor: Colors.white,
         borderWidth: 0.5,
         borderColor: Colors.gray,
@@ -44,15 +50,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 60
     },
+    cartItemContainer: {
+        backgroundColor: Colors.white,
+        width: '100%',
+        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     quantity: {
         fontSize: 16,
         paddingRight: 10,
     },
     cartTitle: {
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'left',
         color: Colors.secondaryColor,
-        fontFamily: FONT_BOLD,
         flex: 1,
     },
     cartSum: {
@@ -61,7 +74,6 @@ const styles = StyleSheet.create({
         fontFamily: FONT_BOLD,
         width: 80
     },
-    deleteButton: {}
 });
 
 export default CartItem;
