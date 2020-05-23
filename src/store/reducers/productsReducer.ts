@@ -1,7 +1,12 @@
 import { Action } from '../../models/Action';
 import PRODUCTS from '../../../mocks/products';
 import { ProductsState } from '../../models/ProductsState';
-import { CREATE_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT } from '../actions/productsActions';
+import {
+    CREATE_PRODUCT,
+    DELETE_PRODUCT,
+    SET_PRODUCTS,
+    UPDATE_PRODUCT
+} from '../actions/productsActions';
 import { Product } from '../../models/Product';
 
 const initialState: ProductsState = {
@@ -48,6 +53,12 @@ export const productsReducer = (state: ProductsState = initialState, action: Act
                 availableProducts: [...updatedProducts],
                 userProducts: [...updatedUserProducts]
             };
+
+        case SET_PRODUCTS:
+            return {
+                availableProducts: [...action.payload],
+                userProducts: action.payload.filter((product:Product) => product.ownerId === 'u1')
+            }
 
         default:
             return state;

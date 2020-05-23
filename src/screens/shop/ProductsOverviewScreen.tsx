@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../../components/CustomHeaderButton';
 import { Button } from 'react-native-paper';
 import ButtonStyles from '../../styles/Buttons';
+import { fetchProducts } from '../../store/actions/productsActions';
 
 type Props = {
     navigation: any;
@@ -51,6 +52,10 @@ const ProductsOverviewScreen = (props: Props) => {
             </Button>
         </ProductItem>
     };
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
 
     return (
         <View style={styles.screen}>

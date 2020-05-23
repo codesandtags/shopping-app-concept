@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
 import { TextInput } from 'react-native-paper';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -22,7 +22,7 @@ const EditProductScreen = (props: Props) => {
     const dispatch = useDispatch();
 
     const submitHandler = useCallback(() => {
-        const product:Product = {
+        const product: Product = {
             title,
             imageUrl,
             price: Number(price),
@@ -43,54 +43,64 @@ const EditProductScreen = (props: Props) => {
     }, [submitHandler]);
 
     return (
-        <ScrollView>
-            <View style={styles.screen}>
-                <View style={styles.formControl}>
-                    <TextInput
-                        mode="outlined"
-                        label="Title"
-                        value={title}
-                        style={styles.textInput}
-                        onChangeText={value => setTitle(value)}
-                    />
+        <KeyboardAvoidingView style={{flex: 1}}  behavior="padding" keyboardVerticalOffset={100}>
+            <ScrollView>
+                <View style={styles.screen}>
+                    <View style={styles.formControl}>
+                        <TextInput
+                            mode="outlined"
+                            label="Title"
+                            value={title}
+                            style={styles.textInput}
+                            onChangeText={value => setTitle(value)}
+                            keyboardType="default"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            returnKeyType="next"
+                        />
+                    </View>
+                    <View style={styles.formControl}>
+                        <TextInput
+                            mode="outlined"
+                            label="Image URL"
+                            value={imageUrl}
+                            style={styles.textInput}
+                            onChangeText={value => setImageUrl(value)}
+                            returnKeyType="next"
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    {
+                        editedProduct
+                            ? null
+                            : (
+                                <View style={styles.formControl}>
+                                    <TextInput
+                                        mode="outlined"
+                                        label="Price"
+                                        value={price}
+                                        style={styles.textInput}
+                                        onChangeText={value => setPrice(value)}
+                                        keyboardType="decimal-pad"
+                                        returnKeyType="next"
+                                    />
+                                </View>
+                            )
+                    }
+                    <View style={styles.formControl}>
+                        <TextInput
+                            mode="outlined"
+                            label="Description"
+                            value={description}
+                            style={styles.textInput}
+                            onChangeText={value => setDescription(value)}
+                            numberOfLines={2}
+                            multiline
+                        />
+                    </View>
                 </View>
-                <View style={styles.formControl}>
-                    <TextInput
-                        mode="outlined"
-                        label="Image URL"
-                        value={imageUrl}
-                        style={styles.textInput}
-                        onChangeText={value => setImageUrl(value)}
-                    />
-                </View>
-                {
-                    editedProduct
-                        ? null
-                        : (
-                            <View style={styles.formControl}>
-                                <TextInput
-                                    mode="outlined"
-                                    label="Price"
-                                    value={price}
-                                    style={styles.textInput}
-                                    onChangeText={value => setPrice(value)}
-                                />
-                            </View>
-                        )
-                }
-                <View style={styles.formControl}>
-                    <TextInput
-                        mode="outlined"
-                        label="Description"
-                        value={description}
-                        style={styles.textInput}
-                        onChangeText={value => setDescription(value)}
-                        numberOfLines={4}
-                        multiline
-                    />
-                </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </KeyboardAvoidingView>
     )
 };
 

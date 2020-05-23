@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import  { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider as StoreProvider} from 'react-redux';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import reduxThunk from 'redux-thunk';
 
 import * as Fonts from 'expo-font';
 import { AppLoading } from 'expo';
@@ -19,7 +20,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   orders: ordersReducer
 });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(reduxThunk));
 
 const theme = {
   ...DefaultTheme,
