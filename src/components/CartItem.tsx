@@ -70,9 +70,10 @@ const styles = StyleSheet.create({
     },
     cartSum: {
         fontSize: 14,
-        textAlign: 'center',
+        textAlign: 'right',
         fontFamily: FONT_BOLD,
-        width: 80
+        paddingRight: 10,
+        width: 120
     },
 });
 

@@ -3,22 +3,23 @@ import PRODUCTS from '../../../mocks/products';
 import { ProductsState } from '../../models/ProductsState';
 import {
     CREATE_PRODUCT,
-    DELETE_PRODUCT,
+    DELETE_PRODUCT, FETCHING_PRODUCTS, FETCHING_PRODUCTS_ERROR,
     SET_PRODUCTS,
     UPDATE_PRODUCT
 } from '../actions/productsActions';
 import { Product } from '../../models/Product';
 
 const initialState: ProductsState = {
-    availableProducts: PRODUCTS,
-    userProducts: PRODUCTS.filter(product => product.ownerId === 'u1')
+    availableProducts: [],
+    userProducts: [],
+    isLoading: false,
+    error: ''
 }
 
 export const productsReducer = (state: ProductsState = initialState, action: Action) => {
     switch (action.type) {
 
         case DELETE_PRODUCT:
-            console.log('Removing product ', action.payload);
             return {
                 ...state,
                 userProducts: state.userProducts.filter((product: Product) => product.id !== action.payload.id)
@@ -54,10 +55,26 @@ export const productsReducer = (state: ProductsState = initialState, action: Act
                 userProducts: [...updatedUserProducts]
             };
 
+        case FETCHING_PRODUCTS:
+            console.log('Getting products...');
+            return  {
+                ...state,
+                isLoading: true,
+                error: ''
+            }
+
+        case FETCHING_PRODUCTS_ERROR:
+            return  {
+                ...state,
+                isLoading: false,
+                error: action.payload
+            }
+
         case SET_PRODUCTS:
             return {
                 availableProducts: [...action.payload],
-                userProducts: action.payload.filter((product:Product) => product.ownerId === 'u1')
+                userProducts: action.payload.filter((product:Product) => product.ownerId === 'u1'),
+                isLoading: false
             }
 
         default:

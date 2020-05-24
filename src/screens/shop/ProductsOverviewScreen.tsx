@@ -1,6 +1,12 @@
-import React, { useEffect } from 'react';
-import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
-import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
+import React, { useEffect, useState } from 'react';
+import {
+    ActivityIndicator,
+    FlatList,
+    ListRenderItemInfo,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Product } from '../../models/Product';
 import { RootState } from '../../models/ProductsState';
@@ -21,6 +27,12 @@ type Props = {
 const ProductsOverviewScreen = (props: Props) => {
     const availableProducts = useSelector((state: RootState) => {
         return state.products.availableProducts
+    });
+    const isLoading = useSelector((state: RootState) => {
+        return state.products.isLoading
+    });
+    const error = useSelector((state: RootState) => {
+        return state.products.error
     });
     const dispatch = useDispatch();
     const renderProduct = (listItem: ListRenderItemInfo<Product>) => {
@@ -54,8 +66,41 @@ const ProductsOverviewScreen = (props: Props) => {
     };
 
     useEffect(() => {
-        dispatch(fetchProducts());
+        const willFocusListener = props.navigation.addListener('willFocus', () => {
+            dispatch(fetchProducts());
+        });
+
+        return () => {
+            willFocusListener.removeListener('willFocus');
+        }
     }, [dispatch]);
+
+    if (isLoading) {
+        return (
+            <View style={styles.screen}>
+                <ActivityIndicator
+                    style={{flex: 1}}
+                    size="large"
+                    color={Colors.primaryColor}/>
+            </View>
+        )
+    }
+
+    if (!isLoading && error) {
+        return (
+            <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
+                <Text>Upssss!! an error occur getting the product. Please review your internet connection or contact to the admin.</Text>
+            </View>
+        )
+    }
+
+    if (!isLoading && availableProducts.length === 0) {
+        return (
+            <View style={styles.screen}>
+                <Text>There are not products, please consider add some products.</Text>
+            </View>
+        )
+    }
 
     return (
         <View style={styles.screen}>

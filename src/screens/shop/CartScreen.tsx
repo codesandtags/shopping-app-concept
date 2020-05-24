@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     cartSummaryContainer: {
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
         marginBottom: 20,
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
     },
     cartAmount: {
         color: Colors.secondaryColor,
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: FONT_BOLD,
         paddingLeft: 10,
         borderWidth: 2,

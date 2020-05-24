@@ -1,17 +1,32 @@
 // Action Types
 import { Product } from '../../models/Product';
 import { Action } from '../../models/Action';
+import { API } from '../../constants/Api';
 
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const FETCHING_PRODUCTS = 'FETCHING_PRODUCTS';
+export const FETCHING_PRODUCTS_ERROR = 'FETCHING_PRODUCTS_ERROR';
+export const UPDATE_PRODUCTS_ERROR = 'UPDATE_PRODUCTS_ERROR';
+export const DELETE_PRODUCTS_ERROR = 'DELETE_PRODUCTS_ERROR';
 
 // Action Creators
-export const fetchProducts = () => {
-    return async (dispatch: Function) => {
-        const url = 'https://shopping-app-concept.firebaseio.com/products.json';
+export const fetchProducts = () => async (dispatch: Function) => {
+    dispatch({
+        type: FETCHING_PRODUCTS,
+        payload: null
+    });
+
+    try {
+        const url = API.PRODUCTS;
         const response = await fetch(url, {});
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
         const data = await response.json();
         const products: Product[] = [];
 
@@ -30,20 +45,45 @@ export const fetchProducts = () => {
             type: SET_PRODUCTS,
             payload: products
         })
+    } catch (e) {
+        dispatch({
+            type: FETCHING_PRODUCTS_ERROR,
+            payload: e.message
+        });
     }
 };
 
-export const deleteProduct = (product: Product): Action => {
+export const deleteProduct = (product: Product) => async (dispatch: Function) => {
+    try {
+        const url = API.UPDATE_PRODUCTS(product.id);
+        console.log('Deleting this product ...', url);
+        console.log('Width this data ...', product);
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
 
-    return {
-        type: DELETE_PRODUCT,
-        payload: product
+        const data = await response.json();
+        console.log('data => ', data);
+
+        dispatch({
+            type: DELETE_PRODUCT,
+            payload: {...product }
+        });
+    } catch (e) {
+        console.log('Deleting products with error º', e);
+        dispatch({
+            type: UPDATE_PRODUCTS_ERROR,
+            payload: e.message
+        });
     }
 }
 
 export const createProduct = (product: Product) => {
     return async (dispatch: Function) => {
-        const url = 'https://shopping-app-concept.firebaseio.com/products.json';
+        const url = API.PRODUCTS;
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -57,15 +97,36 @@ export const createProduct = (product: Product) => {
 
         dispatch({
             type: CREATE_PRODUCT,
-            payload: { ...product, id: data.name}
+            payload: {...product, id: data.name}
         });
     }
 }
 
-export const updateProduct = (product: Product): Action => {
+export const updateProduct = (product: Product) => async (dispatch: Function) => {
+    try {
+        const url = API.UPDATE_PRODUCTS(product.id);
+        console.log('Updating this product ...', url);
+        console.log('Width this data ...', product);
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(product)
+        });
 
-    return {
-        type: UPDATE_PRODUCT,
-        payload: product
+        const data = await response.json();
+        console.log('data => ', data);
+
+        dispatch({
+            type: UPDATE_PRODUCT,
+            payload: {...product, id: data.name}
+        });
+    } catch (e) {
+        console.log('Updating products with error º', e);
+        dispatch({
+            type: UPDATE_PRODUCTS_ERROR,
+            payload: e.message
+        });
     }
 }
