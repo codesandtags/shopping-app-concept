@@ -1,5 +1,6 @@
 import { CartState } from './CartState';
 import { OrdersState } from './OrdersState';
+import { AuthenticationState } from './AuthenticationState';
 
 export interface ProductsState {
     availableProducts: any[];
@@ -11,5 +12,6 @@ export interface ProductsState {
 export interface RootState {
     products: ProductsState,
     cart: CartState,
-    orders: OrdersState
+    orders: OrdersState,
+    authentication: AuthenticationState
 }

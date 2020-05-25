@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
@@ -65,15 +65,19 @@ const ProductsOverviewScreen = (props: Props) => {
         </ProductItem>
     };
 
+    const onLoadProducts = useCallback(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
     useEffect(() => {
         const willFocusListener = props.navigation.addListener('willFocus', () => {
-            dispatch(fetchProducts());
+            onLoadProducts();
         });
 
         return () => {
             willFocusListener.removeListener('willFocus');
         }
-    }, [dispatch]);
+    }, [onLoadProducts]);
 
     if (isLoading) {
         return (
@@ -105,6 +109,8 @@ const ProductsOverviewScreen = (props: Props) => {
     return (
         <View style={styles.screen}>
             <FlatList
+                onRefresh={onLoadProducts}
+                refreshing={isLoading}
                 style={styles.productsList}
                 data={availableProducts}
                 renderItem={renderProduct}
