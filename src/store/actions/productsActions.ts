@@ -13,14 +13,17 @@ export const UPDATE_PRODUCTS_ERROR = 'UPDATE_PRODUCTS_ERROR';
 export const DELETE_PRODUCTS_ERROR = 'DELETE_PRODUCTS_ERROR';
 
 // Action Creators
-export const fetchProducts = () => async (dispatch: Function) => {
+export const fetchProducts = () => async (dispatch: Function, getState: Function) => {
     dispatch({
         type: FETCHING_PRODUCTS,
         payload: null
     });
 
+    console.log('And the state is...', getState());
+
     try {
-        const url = API.PRODUCTS;
+        const token = getState().authentication.token;
+        const url = API.PRODUCTS(token);
         const response = await fetch(url, {});
 
         if (!response.ok) {
@@ -45,17 +48,19 @@ export const fetchProducts = () => async (dispatch: Function) => {
             type: SET_PRODUCTS,
             payload: products
         })
-    } catch (e) {
+    } catch (error) {
+        console.log('Upsss error getting products...', error);
         dispatch({
             type: FETCHING_PRODUCTS_ERROR,
-            payload: e.message
+            payload: error.message
         });
     }
 };
 
-export const deleteProduct = (product: Product) => async (dispatch: Function) => {
+export const deleteProduct = (product: Product) => async (dispatch: Function, getState: Function) => {
     try {
-        const url = API.UPDATE_PRODUCTS(product.id);
+        const token = getState().authentication.token;
+        const url = API.UPDATE_PRODUCTS(product.id, token);
         console.log('Deleting this product ...', url);
         console.log('Width this data ...', product);
         const response = await fetch(url, {
@@ -82,8 +87,9 @@ export const deleteProduct = (product: Product) => async (dispatch: Function) =>
 }
 
 export const createProduct = (product: Product) => {
-    return async (dispatch: Function) => {
-        const url = API.PRODUCTS;
+    return async (dispatch: Function, getState: Function) => {
+        const token = getState().authentication.token;
+        const url = API.PRODUCTS(token);
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -102,9 +108,10 @@ export const createProduct = (product: Product) => {
     }
 }
 
-export const updateProduct = (product: Product) => async (dispatch: Function) => {
+export const updateProduct = (product: Product) => async (dispatch: Function, getState: Function) => {
     try {
-        const url = API.UPDATE_PRODUCTS(product.id);
+        const token = getState().authentication.token;
+        const url = API.UPDATE_PRODUCTS(product.id, token);
         console.log('Updating this product ...', url);
         console.log('Width this data ...', product);
         const response = await fetch(url, {

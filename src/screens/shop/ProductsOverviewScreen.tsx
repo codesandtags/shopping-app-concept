@@ -70,13 +70,7 @@ const ProductsOverviewScreen = (props: Props) => {
     }, [dispatch]);
 
     useEffect(() => {
-        const willFocusListener = props.navigation.addListener('willFocus', () => {
-            onLoadProducts();
-        });
-
-        return () => {
-            willFocusListener.removeListener('willFocus');
-        }
+        onLoadProducts();
     }, [onLoadProducts]);
 
     if (isLoading) {
