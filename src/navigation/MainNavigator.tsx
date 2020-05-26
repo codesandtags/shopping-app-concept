@@ -10,9 +10,10 @@ import OrdersScreen from '../screens/shop/OrdersScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
 import UserProductsScreen from '../screens/user/UserProductsScreen';
 import Colors from '../constants/Colors';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { FONT_REGULAR } from '../constants/Fonts';
 import React from 'react';
+import AuthenticationScreen from '../screens/user/AuthenticationScreen';
 
 const defaultNavigationConfig = {
     headerStyle: {
@@ -79,4 +80,15 @@ const ShopNavigator = createDrawerNavigator({
     }
 });
 
-export default createAppContainer(ShopNavigator);
+const AuthenticationNavigator = createStackNavigator({
+    [Routes.Authentication]: AuthenticationScreen,
+}, {
+    defaultNavigationOptions: defaultNavigationConfig,
+});
+
+const MainNavigator = createSwitchNavigator({
+    Authentication: AuthenticationNavigator,
+    Shop: ShopNavigator
+})
+
+export default createAppContainer(MainNavigator);

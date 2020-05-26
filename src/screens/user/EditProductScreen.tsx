@@ -8,6 +8,7 @@ import CustomHeaderButton from '../../components/CustomHeaderButton';
 import { Product } from '../../models/Product';
 import { useDispatch } from 'react-redux';
 import { createProduct, updateProduct } from '../../store/actions/productsActions';
+import FormStyles from '../../styles/Forms';
 
 type Props = {
     navigation: StackNavigationProp;
@@ -46,7 +47,7 @@ const EditProductScreen = (props: Props) => {
         <KeyboardAvoidingView style={{flex: 1}}  behavior="padding" keyboardVerticalOffset={100}>
             <ScrollView>
                 <View style={styles.screen}>
-                    <View style={styles.formControl}>
+                    <View style={FormStyles.formControl}>
                         <TextInput
                             mode="outlined"
                             label="Title"
@@ -59,7 +60,7 @@ const EditProductScreen = (props: Props) => {
                             returnKeyType="next"
                         />
                     </View>
-                    <View style={styles.formControl}>
+                    <View style={FormStyles.formControl}>
                         <TextInput
                             mode="outlined"
                             label="Image URL"
@@ -74,7 +75,7 @@ const EditProductScreen = (props: Props) => {
                         editedProduct
                             ? null
                             : (
-                                <View style={styles.formControl}>
+                                <View style={FormStyles.formControl}>
                                     <TextInput
                                         mode="outlined"
                                         label="Price"
@@ -87,7 +88,7 @@ const EditProductScreen = (props: Props) => {
                                 </View>
                             )
                     }
-                    <View style={styles.formControl}>
+                    <View style={FormStyles.formControl}>
                         <TextInput
                             mode="outlined"
                             label="Description"
@@ -129,10 +130,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    formControl: {
-        padding: 10,
-        width: '100%',
     },
     textInput: {
         padding: 0,
