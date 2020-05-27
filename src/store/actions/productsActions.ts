@@ -112,8 +112,6 @@ export const updateProduct = (product: Product) => async (dispatch: Function, ge
     try {
         const token = getState().authentication.token;
         const url = API.UPDATE_PRODUCTS(product.id, token);
-        console.log('Updating this product ...', url);
-        console.log('Width this data ...', product);
         const response = await fetch(url, {
             method: 'PATCH',
             headers: {

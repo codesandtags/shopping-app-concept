@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native';
+
 import { API } from '../../constants/Api';
 
 export const LOGIN = 'LOGIN';
@@ -9,6 +11,8 @@ export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';
 
 export const LOGOUT = 'LOGOUT';
+
+export const AUTHENTICATE = 'AUTHENTICATE';
 
 const getConfig = (username: string, password: string) => {
     return {
@@ -40,12 +44,13 @@ export const login = (username: string, password: string) => async (dispatch: Fu
         }
 
         const data = await response.json();
-        console.log('data login ', data);
-
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data
-        })
+        });
+        const MILLISECONDS = 1000;
+        const expirationDate = new Date(new Date().getTime() + parseInt(data.expiresIn) * MILLISECONDS);
+        saveDataToStorage(data.idToken, data.localId, expirationDate);
     } catch (e) {
         console.log('Uppsss', e);
         dispatch({
@@ -84,4 +89,32 @@ export const signUp = (username: string, password: string) => async (dispatch: F
             payload: 'There is an error creating your account.'
         });
     }
+}
+
+export const logout = () => (dispatch: Function) => {
+    AsyncStorage.clear();
+    console.log('Logout....');
+    return dispatch({
+        type: LOGOUT,
+        payload: {}
+    })
+};
+
+export const authenticate = (idToken: string, localId: string) => (dispatch: Function) => {
+    return dispatch({
+        type: AUTHENTICATE,
+        payload: {
+            idToken,
+            localId
+        }
+    })
+}
+
+const saveDataToStorage = (idToken: string, userId: string, expirationDate: Date) => {
+    console.log('Saving in Async Storage', idToken, userId);
+    AsyncStorage.setItem('userData', JSON.stringify({
+        idToken,
+        userId,
+        expirationDate: expirationDate.toISOString()
+    }))
 }

@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import * as Routes from './routes';
@@ -14,6 +14,11 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { FONT_REGULAR } from '../constants/Fonts';
 import React from 'react';
 import AuthenticationScreen from '../screens/user/AuthenticationScreen';
+import StartUpScreen from '../screens/user/StartupScreen';
+import { Button, SafeAreaView, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/actions/authenticationActions';
+import { Authentication } from './routes';
 
 const defaultNavigationConfig = {
     headerStyle: {
@@ -32,7 +37,6 @@ const ProductsNavigator = createStackNavigator({
     [Routes.ProductDetail]: ProductDetailScreen,
 }, {
     defaultNavigationOptions: defaultNavigationConfig,
-    initialRouteName: Routes.ProductsOverview,
     navigationOptions: {
         drawerIcon: (drawerConfig: any) => {
             return (
@@ -77,6 +81,25 @@ const ShopNavigator = createDrawerNavigator({
 }, {
     contentOptions: {
         activeTintColor: Colors.primaryColor,
+    },
+    contentComponent: (props) => {
+        const dispatch = useDispatch();
+
+        return (
+            <View style={{flex: 1}}>
+                <SafeAreaView>
+                    <DrawerNavigatorItems {...props} />
+                    <Button
+                        title="Logout"
+                        color={Colors.primaryColor}
+                        onPress={() => {
+                            dispatch(logout());
+                            props.navigation.navigate(Authentication);
+                        }}
+                    />
+                </SafeAreaView>
+            </View>
+        )
     }
 });
 
@@ -87,6 +110,7 @@ const AuthenticationNavigator = createStackNavigator({
 });
 
 const MainNavigator = createSwitchNavigator({
+    Startup: StartUpScreen,
     Authentication: AuthenticationNavigator,
     Shop: ShopNavigator
 })

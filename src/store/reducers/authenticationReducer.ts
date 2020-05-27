@@ -1,9 +1,10 @@
 import { Action } from '../../models/Action';
 import { AuthenticationState } from '../../models/AuthenticationState';
 import {
+    AUTHENTICATE,
     LOGIN,
     LOGIN_ERROR,
-    LOGIN_SUCCESS,
+    LOGIN_SUCCESS, LOGOUT,
     SIGN_UP, SIGN_UP_ERROR,
     SIGN_UP_SUCCESS
 } from '../actions/authenticationActions';
@@ -25,6 +26,17 @@ export const authenticationReducer = (state: AuthenticationState = initialState,
                 ...state,
                 isLoading: true
             };
+
+        case AUTHENTICATE:
+            console.log('The payload is : ', action.payload);
+            return  {
+                ...state,
+                isLoading: false,
+                error: '',
+                token: action.payload.idToken,
+                userId: action.payload.localId,
+                isLogged: true
+            }
 
         case LOGIN_SUCCESS:
             return {
@@ -64,6 +76,11 @@ export const authenticationReducer = (state: AuthenticationState = initialState,
                 isLoading: false,
                 error: action.payload
             };
+
+        case LOGOUT:
+            return {
+                ...initialState
+            }
 
         default:
             return state;
