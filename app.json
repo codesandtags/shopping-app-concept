@@ -1,19 +1,19 @@
 {
   "expo": {
-    "name": "shopping-app-concept",
-    "slug": "shopping-app-concept",
+    "name": "Shopping Concept",
+    "slug": "shopping-concept",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
+    "description": "🛒 A Shopping concept application to test to power of React Native and their features.",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,6 +23,14 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.codesandtags.shopping_app_concept",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     }
   }
 }

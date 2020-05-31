@@ -14,10 +14,8 @@ const StartUpScreen = (props: Props) => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log('Trying to get asynchrouonos data');
         const tryLogin = async () => {
             const item = await AsyncStorage.getItem('userData');
-            console.log('And the data is: ', item);
 
             if (!item) {
                 props.navigation.navigate(Authentication);

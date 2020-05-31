@@ -10,7 +10,6 @@ const initialState: OrdersState = {
 export const ordersReducer = (state = initialState, action: Action) => {
     switch (action.type) {
         case ADD_ORDER:
-            console.log('Receive order...', action.payload);
             const order: Order = {
                 id: new Date().getTime().toString().substr(-3),
                 items: [ ...action.payload.orderData.items],

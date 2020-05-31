@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "shopping-app-concept-278701",
+  "private_key_id": "50d9ce4abe134cae4fbc62efe247605423068d5b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCvWkdHfIH1JOn8\n87wg/YDOou+EMJVRttNFZD7XaiFFcOzQQ46paWCOVswhYe5Gac5TaR9rEoZ0wRYC\nthJTvuESgIGjGB2psWd9EXm3MZjjOFTjEvoZ8xItseI8O56+bcf8JAdWqZGO7E5o\nJliGqXAg63KhmE+fFHm8UIFk+5Qsj6HyEUlkeMQ7jDxl2l5Ldc6RvAKt3CBjHWUF\nm63L5LqZsLR4WEB/fPpdzUALiLKQksPr5qSOgDWhnIo6OzhDKlOncHseFvqDz90z\nnbiUMelFhZdM9Mni8nXFNLqv7kR/4AR4GFuu7CRWxCwBPPuXILhq/Gw+X6hOIdOX\nkjkNPSClAgMBAAECgf8BhN+pvWJHCkcvkqI1cV9QgBx662fks1w+nLxP3kVWBCBI\njyeOodeXBNHSu66iTRuxi8GsMZHkcAqUndR/PN/Oac3p80NtnEJZ80K3m9IAKzKB\nLkGLm7lKRoHfAg26b+dUXispLQJ5L2g0Y1Dw4kxWCeZjSL8Ikwo1edBo8plR31GB\n5CJd+skWevkrNW+0tFQPDyxWxI5/L4tqq7eK7bClS6Sx+flrNyY8fyjbnwFGQf3u\nlCaj+Cejwg/66lVIhGrpa8hJ12ONJmVUqt2p4FtSoSq6v83H+0WjEpPe5fzXnpgC\n6YqsiX+tZ8/5qm3m0F3Kh/ynD9NIQkFWMlHUbUECgYEA1mJ11E4PbStWyqrz3w7Y\nzSsqtPPUqPxQkcE+pFUqDvYiVMPyBXDFll09+OKZog00ZKd2pIstdiFoCEb87Uao\nq8V/e7q2exVcQ18IpXOYToYK1Rkz7J86mKVCNsN7hZ04yDrDdeEWaO/3PgnerzH0\n2acYSMmGwqvgbxx5pHJ8CeUCgYEA0WQuHmDi30XutGeeexMCy3M9xZqo9fmeD7Rp\n8j1y120nECrbkvwY46T6S6N8nouqHFNTap9O7h+MqR6/J3Rij6I9wuR96r4BybGJ\n8B9BbfuZoOI7yZJ7zv6VNdXdGh6wjiWp5XfINT/j9bBddXan93lv7NV06cMys0/3\nsUE8T8ECgYEAoCKRsxDP0xLRVLdXTGFxrec1kk6jpco6gHUhTmzS6rQNttVaXZf7\n7zIczWCts287mIfCRmwzfA69/5jO6omiChSPAiPYlJ3C+gvtkHCE7vqO8thNgcz6\nXvTqPa/M/2QN+vpx8AY+0AmW279Rl/mv1DhNGml2AMmT7ksNzbk6T8UCgYEAqzlH\neTHy828FNmKxNqUiGOogrjC9T38SYHdAV4UmHsE0O0VAjl41oBltT2Ld6ev9a/I7\neSnSamhEJpts5r+GRTv/UxpzWPyNC7hxOnjkkSI3y1aUW028jlSiAQbkKZLE/0gP\nOQSNI/Yd2++fTQl9aqHUA4+9bdZf5D9VJY5Z2kECgYEAjdmGeqiW0J/PZrI2kjU7\nthV/E6OCtKcciQVdQxmVcFaA9t2cabRsrB4NjUmyansQLaxBP8daraY1qE23ToJ9\nSpU3y365jrMrjSZx3ld32qj8eJ/xRIHdg5FVGHwrOAWvpHJiPAJtpq77yWB5eQNB\nu8SxIemT4l3F58UVDLITEq4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "shopping-app-concept@shopping-app-concept-278701.iam.gserviceaccount.com",
+  "client_id": "112337667377528141266",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/shopping-app-concept%40shopping-app-concept-278701.iam.gserviceaccount.com"
+}

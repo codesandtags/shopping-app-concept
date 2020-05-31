@@ -19,8 +19,6 @@ export const fetchProducts = () => async (dispatch: Function, getState: Function
         payload: null
     });
 
-    console.log('And the state is...', getState());
-
     try {
         const token = getState().authentication.token;
         const url = API.PRODUCTS(token);
@@ -61,8 +59,6 @@ export const deleteProduct = (product: Product) => async (dispatch: Function, ge
     try {
         const token = getState().authentication.token;
         const url = API.UPDATE_PRODUCTS(product.id, token);
-        console.log('Deleting this product ...', url);
-        console.log('Width this data ...', product);
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {
@@ -71,7 +67,6 @@ export const deleteProduct = (product: Product) => async (dispatch: Function, ge
         });
 
         const data = await response.json();
-        console.log('data => ', data);
 
         dispatch({
             type: DELETE_PRODUCT,
@@ -99,7 +94,6 @@ export const createProduct = (product: Product) => {
         });
 
         const data = await response.json();
-        console.log('data => ', data);
 
         dispatch({
             type: CREATE_PRODUCT,
@@ -121,7 +115,6 @@ export const updateProduct = (product: Product) => async (dispatch: Function, ge
         });
 
         const data = await response.json();
-        console.log('data => ', data);
 
         dispatch({
             type: UPDATE_PRODUCT,

@@ -76,7 +76,6 @@ export const signUp = (username: string, password: string) => async (dispatch: F
         }
 
         const data = await response.json();
-        console.log('data signup ', data);
 
         dispatch({
             type: SIGN_UP_SUCCESS,
@@ -93,7 +92,6 @@ export const signUp = (username: string, password: string) => async (dispatch: F
 
 export const logout = () => (dispatch: Function) => {
     AsyncStorage.clear();
-    console.log('Logout....');
     return dispatch({
         type: LOGOUT,
         payload: {}
@@ -111,7 +109,6 @@ export const authenticate = (idToken: string, localId: string) => (dispatch: Fun
 }
 
 const saveDataToStorage = (idToken: string, userId: string, expirationDate: Date) => {
-    console.log('Saving in Async Storage', idToken, userId);
     AsyncStorage.setItem('userData', JSON.stringify({
         idToken,
         userId,

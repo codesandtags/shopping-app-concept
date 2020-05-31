@@ -28,7 +28,6 @@ export const authenticationReducer = (state: AuthenticationState = initialState,
             };
 
         case AUTHENTICATE:
-            console.log('The payload is : ', action.payload);
             return  {
                 ...state,
                 isLoading: false,

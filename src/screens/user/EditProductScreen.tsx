@@ -39,7 +39,6 @@ const EditProductScreen = (props: Props) => {
         props.navigation.goBack();
     }, [dispatch, editedProduct, title, imageUrl, price, description]);
     useEffect(() => {
-        console.log('Exceuted...');
         props.navigation.setParams({submit: submitHandler});
     }, [submitHandler]);
 

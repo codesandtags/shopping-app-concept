@@ -39,11 +39,9 @@ const CartScreen = (props: Props) => {
     });
     const dispatch = useDispatch();
     const onOrderNow = () => {
-      console.log('Adding order...');
       dispatch(addOrder(cartItems, cartTotalAmount))
     };
     const onRemoveItem = (item: any) => {
-      console.log('Removing item', item);
         dispatch(removeFromCart(item));
     };
     const renderCartItem = (item: any) => {

@@ -56,7 +56,6 @@ export const productsReducer = (state: ProductsState = initialState, action: Act
             };
 
         case FETCHING_PRODUCTS:
-            console.log('Getting products...');
             return  {
                 ...state,
                 isLoading: true,
